@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="160" height="40">
+  <defs>
+    <linearGradient id="gradOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E65100"/>
+      <stop offset="100%" stop-color="#FF7043"/>
+    </linearGradient>
+    <linearGradient id="gradBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D47A1"/>
+      <stop offset="100%" stop-color="#1976D2"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Emblem / Icon Graphic -->
+  <g transform="translate(10, 5)">
+    <!-- Shield / Flame petals -->
+    <path d="M 18,2 C 10,12 5,25 5,40 C 5,55 16,68 30,68 C 25,58 24,46 27,35 C 29,26 35,18 42,12 C 32,10 24,6 18,2 Z" fill="#E65100" />
+    <path d="M 32,8 C 24,18 20,30 22,44 C 23,54 30,64 42,66 C 36,54 37,42 41,32 C 45,22 53,16 60,10 C 48,10 38,8 32,8 Z" fill="#0D47A1" opacity="0.9" />
+    <path d="M 28,32 C 34,26 42,22 50,22 C 45,30 43,40 46,50 C 42,48 35,42 28,32 Z" fill="#00897B" />
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(75, 42)">
+    <text font-family="'Sarabun', 'Prompt', 'Arial', sans-serif" font-weight="900" font-size="34" letter-spacing="-0.5">
+      <tspan fill="#D84315">MS</tspan>
+      <tspan fill="#546E7A">-</tspan>
+      <tspan fill="#1565C0">TRU</tspan>
+    </text>
+  </g>
+  
+  <g transform="translate(77, 56)">
+    <text font-family="'Sarabun', 'Arial', sans-serif" font-weight="700" font-size="8.5" fill="#BF360C" letter-spacing="0.8">
+      Management Science
+    </text>
+  </g>
+  
+  <g transform="translate(77, 67)">
+    <text font-family="'Sarabun', 'Arial', sans-serif" font-weight="600" font-size="7.5" fill="#0D47A1" letter-spacing="0.5">
+      Thepsatri Rajabhat University
+    </text>
+  </g>
+</svg>

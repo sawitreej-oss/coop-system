@@ -1,0 +1,406 @@
+/* ==========================================================================
+   Cooperative Education Application (Ms-Coop 01-01) - Print Stylesheet
+   ออกแบบให้จัดหน้ากระดาษ A4 สองหน้า พอดีเป๊ะ ไม่ล้น ไม่เลื่อน ตรงตามต้นฉบับ
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap');
+
+/* Default Screen Preview wrapper */
+.print-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 0;
+  background-color: #525659;
+  min-height: 100vh;
+}
+
+.a4-sheet {
+  background: white;
+  width: 210mm;
+  min-height: 297mm;
+  height: 297mm;
+  padding: 10mm 14mm 10mm 14mm;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+  position: relative;
+  font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
+  color: #000;
+  font-size: 13.5pt;
+  line-height: 1.42;
+  page-break-after: always;
+  break-after: page;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* ==========================================================================
+   Page 1 Styles
+   ========================================================================== */
+
+/* Top header area */
+.p1-header-grid {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px;
+  align-items: start;
+  margin-bottom: 4px;
+}
+
+.photo-box {
+  width: 2.5cm;
+  height: 3.25cm;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 11pt;
+  color: #222;
+  background: #fafafa;
+  overflow: hidden;
+  position: relative;
+}
+
+.photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.form-id-badge {
+  justify-self: end;
+  border: 1px solid #000;
+  padding: 2px 8px;
+  font-size: 11pt;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.p1-title-block {
+  text-align: center;
+  padding: 0 4px;
+}
+
+.p1-title-block .faculty-logo {
+  height: 48px;
+  max-width: 150px;
+  object-fit: contain;
+  margin-bottom: 2px;
+}
+
+.p1-title-block h1 {
+  font-size: 17pt;
+  font-weight: 700;
+  margin: 0 0 2px 0;
+  line-height: 1.2;
+}
+
+.p1-title-block h2 {
+  font-size: 13pt;
+  font-weight: 600;
+  margin: 0 0 1px 0;
+  line-height: 1.25;
+}
+
+.p1-title-block h3 {
+  font-size: 12pt;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.25;
+}
+
+/* Section Box Styling */
+.section-bordered-box {
+  border: 1px solid #000;
+  padding: 7px 10px 8px 10px;
+  margin-top: 6px;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-weight: 700;
+  font-size: 14pt;
+  margin-bottom: 5px;
+}
+
+/* Dots line and field styling */
+.line-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  margin-bottom: 5px;
+  font-size: 13.5pt;
+  line-height: 1.45;
+}
+
+.line-row:last-child {
+  margin-bottom: 0;
+}
+
+.field-label {
+  white-space: nowrap;
+  font-weight: normal;
+}
+
+.fill-dots {
+  flex-grow: 1;
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  min-width: 30px;
+  padding: 0 4px;
+}
+
+/* Underline dotted effect */
+.fill-dots::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3px;
+  border-bottom: 1px dotted #000;
+  z-index: 1;
+}
+
+.fill-dots .field-value {
+  position: relative;
+  z-index: 2;
+  color: #000080; /* dark blue when printed or viewed */
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 2px;
+}
+
+/* For empty / blank print mode */
+.blank-print .fill-dots .field-value {
+  visibility: hidden;
+}
+
+/* Printable Checkbox */
+.p-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #000;
+  margin: 0 4px 0 6px;
+  vertical-align: middle;
+  font-size: 11pt;
+  font-weight: bold;
+  line-height: 1;
+  position: relative;
+}
+
+.p-checkbox.checked::before {
+  content: '✓';
+  position: absolute;
+  top: -2px;
+  left: 1px;
+  color: #000;
+  font-size: 13pt;
+}
+
+/* Student signature row */
+.student-sign-block {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 15px;
+}
+
+.student-sign-content {
+  width: 300px;
+  text-align: center;
+  font-size: 13.5pt;
+  line-height: 1.5;
+}
+
+.sign-line {
+  display: inline-block;
+  min-width: 180px;
+  border-bottom: 1px dotted #000;
+  text-align: center;
+  font-weight: 500;
+  color: #000080;
+  padding: 0 4px;
+}
+
+/* ==========================================================================
+   Page 2 Styles
+   ========================================================================== */
+
+.p2-header-logo {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.p2-header-logo img {
+  height: 44px;
+  max-width: 140px;
+  object-fit: contain;
+}
+
+.p2-outer-border {
+  border: 1px solid #000;
+  padding: 8px 12px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.p2-title {
+  font-weight: 700;
+  font-size: 14pt;
+  margin-bottom: 6px;
+}
+
+/* Top 2 columns evaluation table */
+.eval-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid #000;
+  margin-bottom: 8px;
+}
+
+.eval-col-left {
+  padding: 7px 10px;
+  border-right: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.eval-col-right {
+  padding: 7px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.eval-row-inline {
+  display: flex;
+  align-items: baseline;
+  line-height: 1.45;
+}
+
+.eiw-item {
+  display: flex;
+  align-items: baseline;
+  margin-left: 10px;
+  margin-top: 3px;
+}
+
+/* Evaluation Blocks */
+.eval-section-block {
+  margin-top: 8px;
+}
+
+.eval-block-heading {
+  font-weight: 700;
+  font-size: 13.5pt;
+  margin-bottom: 3px;
+}
+
+.comment-textarea-simulation {
+  min-height: 48px;
+  border-bottom: 1px dotted #000;
+  position: relative;
+  line-height: 1.6;
+}
+
+.sign-officer-row {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 20px;
+}
+
+.sign-officer-box {
+  width: 270px;
+  text-align: center;
+  line-height: 1.45;
+}
+
+.committee-final-box {
+  margin-top: 10px;
+  border-top: 1px dashed #666;
+  padding-top: 8px;
+}
+
+/* ==========================================================================
+   Print Media Query
+   ========================================================================== */
+@media print {
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    width: 210mm !important;
+    height: auto !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide app navigation and non-print components */
+  .no-print,
+  .app-header,
+  .app-navigation,
+  .page-controls,
+  .floating-print-btn,
+  .modal-overlay,
+  .notification-toast {
+    display: none !important;
+  }
+
+  .print-preview-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    display: block !important;
+    gap: 0 !important;
+  }
+
+  .a4-sheet {
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 10mm 14mm 10mm 14mm !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    overflow: hidden !important;
+  }
+
+  .a4-sheet:last-of-type {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  /* Make printed text crisp black or navy */
+  .fill-dots .field-value,
+  .sign-line {
+    color: #000 !important;
+  }
+
+  /* Dotted lines remain visible in print */
+  .fill-dots::after,
+  .sign-line {
+    border-bottom: 1px dotted #000 !important;
+  }
+}
+
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
