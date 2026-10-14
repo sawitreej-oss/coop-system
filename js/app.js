@@ -224,13 +224,13 @@ function initEventListeners() {
   // Form Submit
   const appForm = document.getElementById('coopAppForm');
   if (appForm) {
-   appForm.addEventListener('submit', (e) => {
-        const formData = handleFormSubmit(e);
+  appForm.addEventListener('submit', async (e) => {
+        const formData = await handleFormSubmit(e);
         if (formData) {
             State.applications.unshift(formData);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(State.applications));
+            if (typeof renderApplicationsTable === 'function') renderApplicationsTable();
         }
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(State.applications));
-        if (typeof renderApplicationsTable === 'function') renderApplicationsTable();
     });
   }
 
@@ -582,6 +582,9 @@ function saveLocal(payload, isUpdating) {
   saveToLocalStorage();
   renderApplicationsTable();
   showToast(isUpdating ? 'แก้ไขข้อมูลใบสมัครเรียบร้อยแล้ว' : 'บันทึกใบสมัครใหม่เรียบร้อยแล้ว', 'success');
+  // เติมบรรทัดนี้ไว้เป็นบรรทัดสุดท้ายก่อนปิดปีกกา } ของฟังก์ชัน handleFormSubmit
+    return payload;
+}
 }
 
 function showSuccessModal(app) {
