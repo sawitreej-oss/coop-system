@@ -1021,3 +1021,5 @@ window.viewAndPrintApp = viewAndPrintApp;
 window.confirmDeleteApp = confirmDeleteApp;
 window.executeDeleteApp = executeDeleteApp;
 window.closeModal = closeModal;
+}
+}
