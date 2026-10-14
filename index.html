@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบบันทึกใบสมัครสหกิจศึกษา (Ms-Coop 01-01) - คณะวิทยาการจัดการ มหาวิทยาลัยราชภัฏเทพสตรี</title>
+  <!-- Google Fonts: Sarabun -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       APPLICATION HEADER (ซ่อนเวลาพิมพ์)
+       ======================================================================== -->
+  <header class="app-header no-print">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="header-logo-bg">
+          <img src="assets/logo.png" alt="MS-TRU Logo">
+        </div>
+        <div class="header-titles">
+          <h1>ระบบบันทึกใบสมัครเข้าสหกิจศึกษา</h1>
+          <p>สำนักสหกิจศึกษา คณะวิทยาการจัดการ มหาวิทยาลัยราชภัฏเทพสตรี</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <span class="doc-badge">แบบฟอร์ม Ms-Coop 01-01</span>
+        <span id="storageStatusBadge" class="doc-badge">กำลังเชื่อมต่อระบบ...</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       TOP NAVIGATION BAR (ซ่อนเวลาพิมพ์)
+       ======================================================================== -->
+  <nav class="app-navigation no-print">
+    <div class="nav-container">
+      <button class="nav-tab-btn active" data-tab="tab-form">
+        <span>📝</span> บันทึกใบสมัครใหม่
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-records">
+        <span>📋</span> รายการใบสมัครในระบบ <span id="recordsCountBadge" class="badge-count">0</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-print">
+        <span>🖨️</span> ตัวอย่างและพิมพ์เอกสาร (Ms-Coop 01-01)
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========================================================================
+       MAIN APP CONTENT
+       ======================================================================== -->
+  <main class="main-content">
+
+    <!-- ====================================================================
+         TAB 1: ฟอร์มบันทึกข้อมูลใบสมัคร (FORM TAB)
+         ==================================================================== -->
+    <section id="tab-form" class="tab-pane active no-print">
+      <div class="content-card">
+        <div class="card-header-bar">
+          <h2><span>📄</span> แบบฟอร์มใบสมัครเข้าสหกิจศึกษา (Ms-Coop 01-01)</h2>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" id="sample1Btn" class="btn btn-outline btn-sm">
+              ✨ ใส่ข้อมูลตัวอย่าง 1 (นายธนภัทร)
+            </button>
+            <button type="button" id="sample2Btn" class="btn btn-outline btn-sm">
+              ✨ ใส่ข้อมูลตัวอย่าง 2 (น.ส.กานดา)
+            </button>
+            <button type="button" id="clearFormBtn" class="btn btn-secondary btn-sm">
+              🔄 ล้างฟอร์ม
+            </button>
+          </div>
+        </div>
+
+        <form id="coopAppForm" class="card-body">
+          <input type="hidden" id="appId" name="appId">
+
+          <!-- ข้อมูลภาคการศึกษาและรูปถ่าย -->
+          <div class="form-grid" style="align-items:center;">
+            <div class="col-8">
+              <div class="form-section-title" style="margin-top:0;">
+                <span>🎓</span> ภาคการศึกษาที่ประสงค์จะไปปฏิบัติสหกิจศึกษา
+              </div>
+              <div class="form-grid">
+                <div class="col-6 form-group">
+                  <label for="targetSemester">ภาคการศึกษาที่จะไปสหกิจศึกษา <span class="required">*</span></label>
+                  <select id="targetSemester" name="targetSemester" class="form-control" required>
+                    <option value="1">ภาคการศึกษาที่ 1</option>
+                    <option value="2" selected>ภาคการศึกษาที่ 2</option>
+                    <option value="ฤดูร้อน">ภาคฤดูร้อน</option>
+                  </select>
+                </div>
+                <div class="col-3 form-group">
+                  <label for="academicSemester">ภาคเรียนที่ <span class="required">*</span></label>
+                  <select id="academicSemester" name="academicSemester" class="form-control" required>
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+                <div class="col-3 form-group">
+                  <label for="academicYear">ปีการศึกษา <span class="required">*</span></label>
+                  <select id="academicYear" name="academicYear" class="form-control" required></select>
+                </div>
+              </div>
+            </div>
+
+            <!-- กล่องอัปโหลดรูปถ่าย 1 นิ้ว -->
+            <div class="col-4">
+              <div class="photo-upload-container">
+                <div id="formPhotoPreviewSlot" class="photo-preview-slot">
+                  <span>รูปถ่าย<br>ขนาด 1 นิ้ว</span>
+                </div>
+                <div class="photo-actions">
+                  <label for="photoFileInput" class="btn btn-secondary btn-sm" style="cursor:pointer;">
+                    📷 เลือกรูปถ่าย
+                  </label>
+                  <input type="file" id="photoFileInput" accept="image/*" style="display:none;">
+                  <button type="button" id="removePhotoBtn" class="btn btn-danger btn-sm" style="display:none;">
+                    ลบรูป
+                  </button>
+                  <span class="form-hint">ขนาดรูปถ่าย 1 นิ้ว (ไฟล์ JPG, PNG ไม่เกิน 5MB)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== ส่วนที่ 1: ข้อมูลนักศึกษา ==================== -->
+          <div class="form-section-title">
+            <span>👤</span> ส่วนที่ 1 ข้อมูลนักศึกษา
+          </div>
+
+          <div class="form-grid">
+            <!-- คำนำหน้า -->
+            <div class="col-3 form-group">
+              <label>คำนำหน้าชื่อ <span class="required">*</span></label>
+              <div class="inline-options">
+                <label class="custom-radio-label">
+                  <input type="radio" name="title" value="นาย" checked> นาย
+                </label>
+                <label class="custom-radio-label">
+                  <input type="radio" name="title" value="นาง"> นาง
+                </label>
+                <label class="custom-radio-label">
+                  <input type="radio" name="title" value="นางสาว"> นางสาว
+                </label>
+              </div>
+            </div>
+            <!-- ชื่อ -->
+            <div class="col-4 form-group">
+              <label for="firstName">ชื่อ <span class="required">*</span></label>
+              <input type="text" id="firstName" name="firstName" class="form-control" placeholder="เช่น ธนภัทร" required>
+            </div>
+            <!-- นามสกุล -->
+            <div class="col-5 form-group">
+              <label for="lastName">นามสกุล <span class="required">*</span></label>
+              <input type="text" id="lastName" name="lastName" class="form-control" placeholder="เช่น สุขเกษม" required>
+            </div>
+
+            <!-- เพศ -->
+            <div class="col-3 form-group">
+              <label>เพศ <span class="required">*</span></label>
+              <div class="inline-options">
+                <label class="custom-radio-label">
+                  <input type="radio" name="gender" value="ชาย" checked> ชาย
+                </label>
+                <label class="custom-radio-label">
+                  <input type="radio" name="gender" value="หญิง"> หญิง
+                </label>
+              </div>
+            </div>
+
+            <!-- วัน เดือน ปีเกิด และอายุ -->
+            <div class="col-2 form-group">
+              <label for="birthDate">เกิดวันที่</label>
+              <select id="birthDate" name="birthDate" class="form-control"></select>
+            </div>
+            <div class="col-3 form-group">
+              <label for="birthMonth">เดือนเกิด</label>
+              <select id="birthMonth" name="birthMonth" class="form-control"></select>
+            </div>
+            <div class="col-2 form-group">
+              <label for="birthYear">พ.ศ. เกิด</label>
+              <select id="birthYear" name="birthYear" class="form-control"></select>
+            </div>
+            <div class="col-2 form-group">
+              <label for="age">อายุ (ปี)</label>
+              <input type="number" id="age" name="age" class="form-control" placeholder="21" min="15" max="80">
+            </div>
+
+            <!-- รหัสประจำตัว ชั้นปี สาขาวิชา -->
+            <div class="col-4 form-group">
+              <label for="studentId">รหัสประจำตัวนักศึกษา <span class="required">*</span></label>
+              <input type="text" id="studentId" name="studentId" class="form-control" placeholder="เช่น 6411234001" required>
+            </div>
+            <div class="col-2 form-group">
+              <label for="yearLevel">ชั้นปีที่ <span class="required">*</span></label>
+              <select id="yearLevel" name="yearLevel" class="form-control" required>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="col-6 form-group">
+              <label for="major">สาขาวิชา / วิชาเอก <span class="required">*</span></label>
+              <select id="major" name="major" class="form-control" required>
+                <option value="">-- เลือกสาขาวิชา / วิชาเอก --</option>
+                <option value="สาขาวิชาบริหารธุรกิจ วิชาเอกการตลาด">สาขาวิชาบริหารธุรกิจ วิชาเอกการตลาด</option>
+                <option value="สาขาวิชาบริหารธุรกิจ วิชาเอกการจัดการ" selected>สาขาวิชาบริหารธุรกิจ วิชาเอกการจัดการ</option>
+                <option value="สาขาวิชาบริหารธุรกิจ วิชาเอกการบริหารทรัพยากรมนุษย์และองค์การ">สาขาวิชาบริหารธุรกิจ วิชาเอกการบริหารทรัพยากรมนุษย์และองค์การ</option>
+                <option value="สาขาวิชาบริหารธุรกิจ วิชาเอกการจัดการธุรกิจดิจิทัล">สาขาวิชาบริหารธุรกิจ วิชาเอกการจัดการธุรกิจดิจิทัล</option>
+                <option value="สาขาวิชาการบัญชี">สาขาวิชาการบัญชี</option>
+                <option value="สาขาวิชานิเทศศาสตร์ดิจิทัล">สาขาวิชานิเทศศาสตร์ดิจิทัล</option>
+                <option value="สาขาวิชาการท่องเที่ยวและธุรกิจบริการ">สาขาวิชาการท่องเที่ยวและธุรกิจบริการ</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- ที่อยู่ที่สามารถติดต่อได้ -->
+          <div style="font-weight:600; font-size:14px; color:#455A64; margin:10px 0 6px 0;">
+            🏠 ที่อยู่ที่สามารถติดต่อได้
+          </div>
+          <div class="form-grid">
+            <div class="col-2 form-group">
+              <label for="contactNo">เลขที่</label>
+              <input type="text" id="contactNo" name="contactNo" class="form-control" placeholder="เช่น 124/5">
+            </div>
+            <div class="col-2 form-group">
+              <label for="contactMoo">หมู่ที่</label>
+              <input type="text" id="contactMoo" name="contactMoo" class="form-control" placeholder="เช่น 3">
+            </div>
+            <div class="col-4 form-group">
+              <label for="contactVillage">หมู่บ้าน / อาคาร</label>
+              <input type="text" id="contactVillage" name="contactVillage" class="form-control" placeholder="เช่น บ้านสวนร่มรื่น">
+            </div>
+            <div class="col-2 form-group">
+              <label for="contactSoi">ซอย</label>
+              <input type="text" id="contactSoi" name="contactSoi" class="form-control" placeholder="เช่น สุขเกษม 2">
+            </div>
+            <div class="col-2 form-group">
+              <label for="contactRoad">ถนน</label>
+              <input type="text" id="contactRoad" name="contactRoad" class="form-control" placeholder="เช่น นารายณ์มหาราช">
+            </div>
+
+            <div class="col-3 form-group">
+              <label for="contactSubdistrict">ตำบล / แขวง</label>
+              <input type="text" id="contactSubdistrict" name="contactSubdistrict" class="form-control" placeholder="เช่น ทะเลชุบศร">
+            </div>
+            <div class="col-3 form-group">
+              <label for="contactDistrict">อำเภอ / เขต</label>
+              <input type="text" id="contactDistrict" name="contactDistrict" class="form-control" placeholder="เช่น เมืองลพบุรี">
+            </div>
+            <div class="col-3 form-group">
+              <label for="contactProvince">จังหวัด</label>
+              <input type="text" id="contactProvince" name="contactProvince" class="form-control" placeholder="เช่น ลพบุรี">
+            </div>
+            <div class="col-3 form-group">
+              <label for="contactZipcode">รหัสไปรษณีย์</label>
+              <input type="text" id="contactZipcode" name="contactZipcode" class="form-control" placeholder="เช่น 15000" maxlength="5">
+            </div>
+
+            <div class="col-4 form-group">
+              <label for="contactPhone">โทรศัพท์มือถือ <span class="required">*</span></label>
+              <input type="tel" id="contactPhone" name="contactPhone" class="form-control" placeholder="เช่น 089-123-4567" required>
+            </div>
+            <div class="col-4 form-group">
+              <label for="contactEmail">E-mail <span class="required">*</span></label>
+              <input type="email" id="contactEmail" name="contactEmail" class="form-control" placeholder="เช่น thanapat.suk@gmail.com" required>
+            </div>
+            <div class="col-4 form-group">
+              <label for="contactLineId">Id Line</label>
+              <input type="text" id="contactLineId" name="contactLineId" class="form-control" placeholder="เช่น thanapat_suk">
+            </div>
+          </div>
+
+          <!-- ==================== ส่วนที่ 2: สถานที่ปฏิบัติงานสหกิจ ==================== -->
+          <div class="form-section-title">
+            <span>🏢</span> ส่วนที่ 2 สถานที่ปฏิบัติงานสหกิจ
+          </div>
+
+          <div class="form-grid">
+            <div class="col-12 form-group">
+              <label for="companyName">ชื่อหน่วยงานสถานที่สหกิจ <span class="required">*</span></label>
+              <input type="text" id="companyName" name="companyName" class="form-control" placeholder="เช่น บริษัท สหกิจพัฒนาการอุตสาหกรรม จำกัด" required>
+            </div>
+
+            <div class="col-6 form-group">
+              <label for="companyCoordinator">ชื่อผู้ประสานงานของหน่วยงานสหกิจ</label>
+              <input type="text" id="companyCoordinator" name="companyCoordinator" class="form-control" placeholder="เช่น คุณวิภาวรรณ น้อมเกล้า (ผู้จัดการฝ่ายทรัพยากรบุคคล)">
+            </div>
+            <div class="col-6 form-group">
+              <label for="companyDepartment">แผนกที่นักศึกษาปฏิบัติงานสหกิจศึกษา</label>
+              <input type="text" id="companyDepartment" name="companyDepartment" class="form-control" placeholder="เช่น ฝ่ายบริหารทรัพยากรบุคคลและพัฒนาองค์กร">
+            </div>
+
+            <!-- ที่อยู่หน่วยงาน -->
+            <div class="col-2 form-group">
+              <label for="companyNo">ที่อยู่เลขที่</label>
+              <input type="text" id="companyNo" name="companyNo" class="form-control" placeholder="เช่น 88/9">
+            </div>
+            <div class="col-2 form-group">
+              <label for="companyMoo">หมู่ที่</label>
+              <input type="text" id="companyMoo" name="companyMoo" class="form-control" placeholder="เช่น 1">
+            </div>
+            <div class="col-4 form-group">
+              <label for="companySoi">ซอย</label>
+              <input type="text" id="companySoi" name="companySoi" class="form-control" placeholder="เช่น พัฒนาการ 1">
+            </div>
+            <div class="col-4 form-group">
+              <label for="companyRoad">ถนน</label>
+              <input type="text" id="companyRoad" name="companyRoad" class="form-control" placeholder="เช่น พหลโยธิน">
+            </div>
+
+            <div class="col-3 form-group">
+              <label for="companySubdistrict">ตำบล / แขวง</label>
+              <input type="text" id="companySubdistrict" name="companySubdistrict" class="form-control" placeholder="เช่น เขาสามยอด">
+            </div>
+            <div class="col-3 form-group">
+              <label for="companyDistrict">อำเภอ / เขต</label>
+              <input type="text" id="companyDistrict" name="companyDistrict" class="form-control" placeholder="เช่น เมืองลพบุรี">
+            </div>
+            <div class="col-3 form-group">
+              <label for="companyProvince">จังหวัด</label>
+              <input type="text" id="companyProvince" name="companyProvince" class="form-control" placeholder="เช่น ลพบุรี">
+            </div>
+            <div class="col-3 form-group">
+              <label for="companyZipcode">รหัสไปรษณีย์</label>
+              <input type="text" id="companyZipcode" name="companyZipcode" class="form-control" placeholder="เช่น 15000" maxlength="5">
+            </div>
+
+            <div class="col-4 form-group">
+              <label for="companyPhone">โทรศัพท์มือถือผู้ประสานงาน</label>
+              <input type="tel" id="companyPhone" name="companyPhone" class="form-control" placeholder="เช่น 036-789-012, 081-456-7890">
+            </div>
+            <div class="col-4 form-group">
+              <label for="companyEmail">E-mail หน่วยงาน</label>
+              <input type="email" id="companyEmail" name="companyEmail" class="form-control" placeholder="เช่น hr@sahakit-industry.co.th">
+            </div>
+            <div class="col-4 form-group">
+              <label for="companyLineId">Id Line หน่วยงาน</label>
+              <input type="text" id="companyLineId" name="companyLineId" class="form-control" placeholder="เช่น sahakit_hr">
+            </div>
+          </div>
+
+          <!-- ช่องลงชื่อนักศึกษาและวันที่ยื่น -->
+          <div style="background:#F1F5F9; border-radius:8px; padding:14px; margin-top:14px;">
+            <div style="font-weight:600; margin-bottom:8px; color:#1E293B;">✍️ ข้อมูลการลงนามนักศึกษา (ท้ายหน้า 1)</div>
+            <div class="form-grid" style="margin-bottom:0;">
+              <div class="col-6 form-group">
+                <label>ชื่อผู้ลงนาม (แสดงอัตโนมัติ)</label>
+                <div id="formSignNamePreview" style="font-weight:600; color:#0D47A1; padding:8px 0;">(...........................................................)</div>
+              </div>
+              <div class="col-2 form-group">
+                <label for="signDateDay">วันที่</label>
+                <select id="signDateDay" name="signDateDay" class="form-control"></select>
+              </div>
+              <div class="col-2 form-group">
+                <label for="signDateMonth">เดือน</label>
+                <select id="signDateMonth" name="signDateMonth" class="form-control"></select>
+              </div>
+              <div class="col-2 form-group">
+                <label for="signDateYear">ปี พ.ศ.</label>
+                <select id="signDateYear" name="signDateYear" class="form-control"></select>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== ส่วนที่ 3: ผลการพิจารณา (สำหรับอาจารย์/คณะ) ==================== -->
+          <div id="section3CollapsibleBox" class="collapsible-box">
+            <div id="toggleSection3FormBtn" class="collapsible-header">
+              <span>📋 ส่วนที่ 3 ผลการพิจารณา (โครงการสหกิจศึกษานำส่งให้ภาควิชา/สาขาวิชาพิจารณา - สำหรับอาจารย์/เจ้าหน้าที่)</span>
+              <span class="arrow-icon">▼</span>
+            </div>
+            <div class="collapsible-body">
+              <div class="form-grid">
+                <!-- เรียนครบหลักสูตร -->
+                <div class="col-6 form-group">
+                  <label>การเรียนตามเกณฑ์หลักสูตร</label>
+                  <div class="inline-options" style="margin-bottom:8px;">
+                    <label class="custom-radio-label">
+                      <input type="radio" name="courseCompleteStatus" value="complete" checked> เรียนครบหลักสูตร
+                    </label>
+                    <label class="custom-radio-label">
+                      <input type="radio" name="courseCompleteStatus" value="incomplete"> ไม่ครบ
+                    </label>
+                  </div>
+                  <div style="display:flex; gap:10px;">
+                    <div style="flex:1;">
+                      <label for="creditsEarned" style="font-size:12px;">จำนวนหน่วยกิต</label>
+                      <input type="text" id="creditsEarned" name="creditsEarned" class="form-control" placeholder="เช่น 102">
+                    </div>
+                    <div style="flex:1;">
+                      <label for="gpa" style="font-size:12px;">คะแนนสะสม (GPA)</label>
+                      <input type="text" id="gpa" name="gpa" class="form-control" placeholder="เช่น 3.45">
+                    </div>
+                  </div>
+                  <div style="margin-top:6px;">
+                    <label for="incompleteReason" style="font-size:12px;">กรณีไม่ครบ เนื่องจาก</label>
+                    <input type="text" id="incompleteReason" name="incompleteReason" class="form-control" placeholder="ระบุเหตุผลหากไม่ครบ">
+                  </div>
+                </div>
+
+                <!-- รายวิชาที่ติด E, I, W -->
+                <div class="col-6 form-group">
+                  <label>
+                    <input type="checkbox" id="hasEiwCourses" name="hasEiwCourses" style="margin-right:6px;">
+                    รายวิชาที่ติด E , I , W ได้แก่
+                  </label>
+                  <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
+                    <input type="text" id="eiwCourse1" class="form-control" placeholder="1) ระบุวิชา (ถ้ามี)">
+                    <input type="text" id="eiwCourse2" class="form-control" placeholder="2) ระบุวิชา (ถ้ามี)">
+                    <input type="text" id="eiwCourse3" class="form-control" placeholder="3) ระบุวิชา (ถ้ามี)">
+                  </div>
+                </div>
+
+                <!-- อาจารย์ที่ปรึกษา -->
+                <div class="col-12 form-group">
+                  <label for="advisorComment">ความคิดเห็นอาจารย์ที่ปรึกษา</label>
+                  <textarea id="advisorComment" name="advisorComment" class="form-control" placeholder="ความคิดเห็นอาจารย์ที่ปรึกษา..."></textarea>
+                </div>
+                <div class="col-6 form-group">
+                  <label for="advisorName">ชื่ออาจารย์ที่ปรึกษา</label>
+                  <input type="text" id="advisorName" name="advisorName" class="form-control" placeholder="เช่น ผศ.ดร.สมชาย ใจดี">
+                </div>
+                <div class="col-6"></div>
+
+                <!-- หัวหน้าสาขาวิชา -->
+                <div class="col-6 form-group">
+                  <label>ความเห็นหัวหน้าสาขาวิชา / หัวหน้าวิชาเอก</label>
+                  <div class="inline-options" style="margin-bottom:6px;">
+                    <label class="custom-radio-label">
+                      <input type="radio" name="deptHeadDecision" value="approve"> อนุมัติ
+                    </label>
+                    <label class="custom-radio-label">
+                      <input type="radio" name="deptHeadDecision" value="reject"> ไม่อนุมัติ
+                    </label>
+                  </div>
+                  <input type="text" id="deptHeadRejectReason" name="deptHeadRejectReason" class="form-control" placeholder="เนื่องจาก (กรณีไม่อนุมัติ)">
+                  <div style="margin-top:6px;">
+                    <input type="text" id="deptHeadName" name="deptHeadName" class="form-control" placeholder="ชื่อหัวหน้าสาขาวิชา/หัวหน้าวิชาเอก">
+                  </div>
+                </div>
+
+                <!-- ประธานหลักสูตร -->
+                <div class="col-6 form-group">
+                  <label>ความเห็นประธานหลักสูตรบริหารธุรกิจ</label>
+                  <div class="inline-options" style="margin-bottom:6px;">
+                    <label class="custom-radio-label">
+                      <input type="radio" name="deanDecision" value="approve"> อนุมัติ
+                    </label>
+                    <label class="custom-radio-label">
+                      <input type="radio" name="deanDecision" value="reject"> ไม่อนุมัติ
+                    </label>
+                  </div>
+                  <input type="text" id="deanRejectReason" name="deanRejectReason" class="form-control" placeholder="เนื่องจาก (กรณีไม่อนุมัติ)">
+                  <div style="margin-top:6px;">
+                    <input type="text" id="deanName" name="deanName" class="form-control" placeholder="ชื่อประธานหลักสูตร">
+                  </div>
+                </div>
+
+                <!-- สรุปผลการพิจารณาของภาควิชา -->
+                <div class="col-12 form-group" style="background:#F8FAFC; padding:12px; border-radius:6px;">
+                  <label style="font-weight:700;">ผลการพิจารณาสรุป (โครงการสหกิจศึกษา)</label>
+                  <div class="inline-options" style="margin-bottom:8px;">
+                    <label class="custom-radio-label">
+                      <input type="radio" name="finalDecision" value="approved"> ให้ไปปฏิบัติสหกิจศึกษาได้
+                    </label>
+                    <label class="custom-radio-label">
+                      <input type="radio" name="finalDecision" value="pending"> รอพิจารณาในโอกาสต่อไป
+                    </label>
+                  </div>
+                  <input type="text" id="finalPendingReason" name="finalPendingReason" class="form-control" placeholder="เนื่องจาก (กรณีรอพิจารณา)">
+                  
+                  <div class="form-grid" style="margin-top:10px; margin-bottom:0;">
+                    <div class="col-6 form-group">
+                      <label for="committeeName">ลงชื่อกรรมการสหกิจศึกษา</label>
+                      <input type="text" id="committeeName" name="committeeName" class="form-control" placeholder="ชื่อกรรมการสหกิจศึกษา">
+                    </div>
+                    <div class="col-2 form-group">
+                      <label for="committeeSignDay">วันที่</label>
+                      <select id="committeeSignDay" name="committeeSignDay" class="form-control"></select>
+                    </div>
+                    <div class="col-2 form-group">
+                      <label for="committeeSignMonth">เดือน</label>
+                      <select id="committeeSignMonth" name="committeeSignMonth" class="form-control"></select>
+                    </div>
+                    <div class="col-2 form-group">
+                      <label for="committeeSignYear">ปี พ.ศ.</label>
+                      <select id="committeeSignYear" name="committeeSignYear" class="form-control"></select>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Action Footer Bar -->
+          <div class="form-footer-bar">
+            <span class="form-hint">กรุณาตรวจสอบความถูกต้องของข้อมูลก่อนบันทึก</span>
+            <div style="display:flex; gap:10px;">
+              <button type="submit" class="btn btn-primary btn-lg">
+                💾 บันทึกใบสมัคร
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 2: รายการใบสมัครในระบบ (RECORDS TAB)
+         ==================================================================== -->
+    <section id="tab-records" class="tab-pane no-print">
+      <div class="content-card">
+        <div class="card-header-bar">
+          <h2><span>📋</span> รายการใบสมัครเข้าสหกิจศึกษาทั้งหมด</h2>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" id="exportCsvBtn" class="btn btn-outline btn-sm">
+              📊 ส่งออก CSV (Excel)
+            </button>
+            <button type="button" id="exportJsonBtn" class="btn btn-secondary btn-sm">
+              💾 สำรองข้อมูล JSON
+            </button>
+            <label for="importJsonInput" class="btn btn-secondary btn-sm" style="cursor:pointer;">
+              📂 นำเข้า JSON
+            </label>
+            <input type="file" id="importJsonInput" accept=".json" style="display:none;">
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Search & Filter Bar -->
+          <div class="search-filter-bar">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="searchRecordsInput" class="form-control" placeholder="ค้นหาด้วยชื่อ, นามสกุล, รหัสนักศึกษา, สถานประกอบการ...">
+            </div>
+            <div style="min-width: 220px;">
+              <select id="filterMajor" class="form-control">
+                <option value="">-- กรองทุกสาขาวิชา --</option>
+                <option value="สาขาวิชาบริหารธุรกิจ วิชาเอกการตลาด">สาขาวิชาบริหารธุรกิจ วิชาเอกการตลาด</option>
+                <option value="สาขาวิชาบริหารธุรกิจ วิชาเอกการจัดการ">สาขาวิชาบริหารธุรกิจ วิชาเอกการจัดการ</option>
+                <option value="สาขาวิชาบริหารธุรกิจ วิชาเอกการบริหารทรัพยากรมนุษย์และองค์การ">สาขาวิชาบริหารธุรกิจ วิชาเอกการบริหารทรัพยากรมนุษย์และองค์การ</option>
+                <option value="สาขาวิชาบริหารธุรกิจ วิชาเอกการจัดการธุรกิจดิจิทัล">สาขาวิชาบริหารธุรกิจ วิชาเอกการจัดการธุรกิจดิจิทัล</option>
+                <option value="สาขาวิชาการบัญชี">สาขาวิชาการบัญชี</option>
+                <option value="สาขาวิชานิเทศศาสตร์ดิจิทัล">สาขาวิชานิเทศศาสตร์ดิจิทัล</option>
+                <option value="สาขาวิชาการท่องเที่ยวและธุรกิจบริการ">สาขาวิชาการท่องเที่ยวและธุรกิจบริการ</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Records Table -->
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">ลำดับ</th>
+                  <th style="width: 130px;">รหัสนักศึกษา</th>
+                  <th>ชื่อ - นามสกุล</th>
+                  <th>สถานที่ปฏิบัติงานสหกิจ</th>
+                  <th>ภาค/ปีการศึกษา</th>
+                  <th style="width: 120px;">สถานะ</th>
+                  <th style="width: 200px;">จัดการ</th>
+                </tr>
+              </thead>
+              <tbody id="applicationsTableBody">
+                <!-- Javascript will render records here -->
+              </tbody>
+            </table>
+          </div>
+
+          <div id="recordsEmptyState" style="text-align:center; padding:40px; color:#90A4AE; display:none;">
+            <div style="font-size:36px; margin-bottom:8px;">📭</div>
+            <div style="font-size:16px; font-weight:600;">ยังไม่มีข้อมูลใบสมัครในระบบ</div>
+            <p style="font-size:13px;">กรุณากรอกใบสมัครใหม่ หรือคลิกปุ่มใส่ข้อมูลตัวอย่าง</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 3: ตัวอย่างและสั่งพิมพ์เอกสาร (PRINT PREVIEW TAB)
+         ==================================================================== -->
+    <section id="tab-print" class="tab-pane">
+
+      <!-- Floating Print Controls (ซ่อนเวลาพิมพ์) -->
+      <div class="print-floating-bar no-print">
+        <div>
+          <h3>ตัวอย่างเอกสารใบสมัคร Ms-Coop 01-01 (A4 พอดี 2 หน้า)</h3>
+          <span style="font-size:12px; color:#CFD8DC;">แนะนำให้เลือก Margin: Minimum หรือ None และเปิด Background graphics ในหน้าต่างพิมพ์</span>
+        </div>
+        <div class="print-tools-actions">
+          <label style="display:flex; align-items:center; gap:6px; font-size:13.5px; cursor:pointer;">
+            <input type="checkbox" id="togglePrintSection3" checked> รวมส่วนที่ 3 (หน้า 2)
+          </label>
+          <button type="button" id="printBlankBtn" class="btn btn-secondary btn-sm">
+            📄 พิมพ์แบบฟอร์มเปล่า
+          </button>
+          <button type="button" id="triggerPrintBtn" class="btn btn-success btn-lg">
+            🖨️ สั่งพิมพ์เอกสาร / บันทึกเป็น PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- ==================================================================
+           PRINT SHEETS CONTAINER (เอกสาร 2 หน้าสำหรับปรินท์จริง)
+           ================================================================== -->
+      <div id="printSheetsContainer" class="print-preview-container">
+
+        <!-- ==================== PAGE 1 (Ms-Coop 01-01 หน้าที่ 1) ==================== -->
+        <div id="printPage1" class="a4-sheet">
+          
+          <!-- Top Row: Photo (Left), Title (Center), Doc Badge (Right) -->
+          <div class="p1-header-grid">
+            <!-- กรอบรูปถ่ายขนาด 1 นิ้ว -->
+            <div id="printPhotoBox" class="photo-box">
+              <span>รูปถ่าย<br>ขนาด 1 นิ้ว</span>
+            </div>
+
+            <!-- ข้อความหัวเอกสารตรงกลาง -->
+            <div class="p1-title-block">
+              <img src="assets/logo.png" alt="MS-TRU" class="faculty-logo">
+              <h1>ใบสมัครเข้าสหกิจศึกษา</h1>
+              <h2>สำนักสหกิจศึกษาคณะวิทยาการจัดการ มหาวิทยาลัยราชภัฏเทพสตรี</h2>
+              <h3>Cooperative Education Faculty of Management Science Thepsatri Rajabhat University</h3>
+            </div>
+
+            <!-- รหัสแบบฟอร์มมุมขวาบน -->
+            <div class="form-id-badge">
+              Ms-Coop 01-01
+            </div>
+          </div>
+
+          <!-- ==================== ส่วนที่ 1 ข้อมูลนักศึกษา ==================== -->
+          <div class="section-bordered-box">
+            <div class="section-title">ส่วนที่ 1 ข้อมูลนักศึกษา</div>
+
+            <!-- Row 1: ภาคการศึกษา -->
+            <div class="line-row">
+              <span class="field-label">ภาคการศึกษาที่จะไปสหกิจศึกษา</span>
+              <span class="fill-dots" style="max-width:180px;"><span id="pvTargetSemester" class="field-value">2</span></span>
+              <span class="field-label" style="margin-left:10px;">ภาคการศึกษาที่</span>
+              <span class="fill-dots" style="max-width:120px;"><span id="pvAcademicSemester" class="field-value">2</span></span>
+              <span class="field-label" style="margin-left:10px;">ปีการศึกษา</span>
+              <span class="fill-dots"><span id="pvAcademicYear" class="field-value">2567</span></span>
+            </div>
+
+            <!-- Row 2: ชื่อ-นามสกุล -->
+            <div class="line-row">
+              <span class="field-label">ชื่อ</span>
+              <span id="pvTitleMr" class="p-checkbox"></span> นาย
+              <span id="pvTitleMrs" class="p-checkbox"></span> นาง
+              <span id="pvTitleMiss" class="p-checkbox"></span> นางสาว
+              <span class="fill-dots" style="flex-grow:2;"><span id="pvFirstName" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:10px;">นามสกุล</span>
+              <span class="fill-dots" style="flex-grow:2;"><span id="pvLastName" class="field-value"></span></span>
+            </div>
+
+            <!-- Row 3: เพศ เกิดวันที่ พ.ศ. อายุ -->
+            <div class="line-row">
+              <span class="field-label">เพศ</span>
+              <span id="pvGenderMale" class="p-checkbox"></span> ชาย
+              <span id="pvGenderFemale" class="p-checkbox"></span> หญิง
+              <span class="field-label" style="margin-left:12px;">เกิดวันที่</span>
+              <span class="fill-dots" style="flex-grow:1.5;"><span id="pvBirthDate" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:10px;">พ.ศ.</span>
+              <span class="fill-dots" style="width:70px; flex-grow:0.5;"><span id="pvBirthYear" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:10px;">อายุ</span>
+              <span class="fill-dots" style="width:60px; flex-grow:0.5;"><span id="pvAge" class="field-value"></span></span>
+              <span class="field-label">ปี</span>
+            </div>
+
+            <!-- Row 4: รหัสประจำตัว ชั้นปี สาขาวิชา -->
+            <div class="line-row">
+              <span class="field-label">รหัสประจำตัว</span>
+              <span class="fill-dots" style="width:140px; flex-grow:0.8;"><span id="pvStudentId" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:10px;">ชั้นปีที่</span>
+              <span class="fill-dots" style="width:60px; flex-grow:0.4;"><span id="pvYearLevel" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:10px;">สาขาวิชา/วิชาเอก</span>
+              <span class="fill-dots" style="flex-grow:2;"><span id="pvMajor" class="field-value"></span></span>
+            </div>
+
+            <!-- Row 5: ที่อยู่ 1 -->
+            <div class="line-row">
+              <span class="field-label">ที่อยู่ที่สามารถติดต่อได้เลขที่</span>
+              <span class="fill-dots" style="width:80px; flex-grow:0.6;"><span id="pvContactNo" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">หมู่ที่</span>
+              <span class="fill-dots" style="width:60px; flex-grow:0.4;"><span id="pvContactMoo" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">หมู่บ้าน</span>
+              <span class="fill-dots" style="flex-grow:2;"><span id="pvContactVillage" class="field-value"></span></span>
+            </div>
+
+            <!-- Row 6: ที่อยู่ 2 -->
+            <div class="line-row">
+              <span class="field-label">ซอย</span>
+              <span class="fill-dots" style="flex-grow:1;"><span id="pvContactSoi" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">ถนน</span>
+              <span class="fill-dots" style="flex-grow:1.2;"><span id="pvContactRoad" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">ตำบล</span>
+              <span class="fill-dots" style="flex-grow:1.2;"><span id="pvContactSubdistrict" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">อำเภอ</span>
+              <span class="fill-dots" style="flex-grow:1.2;"><span id="pvContactDistrict" class="field-value"></span></span>
+            </div>
+
+            <!-- Row 7: ที่อยู่ 3 -->
+            <div class="line-row">
+              <span class="field-label">จังหวัด</span>
+              <span class="fill-dots" style="flex-grow:1.2;"><span id="pvContactProvince" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">รหัสไปรษณีย์</span>
+              <span class="fill-dots" style="width:90px; flex-grow:0.6;"><span id="pvContactZipcode" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">โทรศัพท์มือถือ</span>
+              <span class="fill-dots" style="flex-grow:1.5;"><span id="pvContactPhone" class="field-value"></span></span>
+            </div>
+
+            <!-- Row 8: การติดต่อ -->
+            <div class="line-row">
+              <span class="field-label">E-mail</span>
+              <span class="fill-dots" style="flex-grow:1.8;"><span id="pvContactEmail" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:10px;">Id Line</span>
+              <span class="fill-dots" style="flex-grow:1.5;"><span id="pvContactLineId" class="field-value"></span></span>
+            </div>
+          </div>
+
+          <!-- ==================== ส่วนที่ 2 สถานที่ปฏิบัติงานสหกิจ ==================== -->
+          <div class="section-bordered-box">
+            <div class="section-title">ส่วนที่ 2 สถานที่ปฏิบัติงานสหกิจ</div>
+
+            <!-- Row 1: ชื่อหน่วยงาน -->
+            <div class="line-row">
+              <span class="field-label">ชื่อหน่วยงานสถานที่สหกิจ</span>
+              <span class="fill-dots"><span id="pvCompanyName" class="field-value"></span></span>
+            </div>
+
+            <!-- Row 2: ผู้ประสานงาน -->
+            <div class="line-row">
+              <span class="field-label">ชื่อผู้ประสานงานของหน่วยงานสหกิจ</span>
+              <span class="fill-dots"><span id="pvCompanyCoordinator" class="field-value"></span></span>
+            </div>
+
+            <!-- Row 3: แผนก -->
+            <div class="line-row">
+              <span class="field-label">แผนกที่นักศึกษาปฏิบัติงานสหกิจศึกษา</span>
+              <span class="fill-dots"><span id="pvCompanyDepartment" class="field-value"></span></span>
+            </div>
+
+            <!-- Row 4: ที่อยู่หน่วยงาน 1 -->
+            <div class="line-row">
+              <span class="field-label">ที่อยู่หน่วยงานเลขที่</span>
+              <span class="fill-dots" style="width:80px; flex-grow:0.5;"><span id="pvCompanyNo" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">หมู่ที่</span>
+              <span class="fill-dots" style="width:60px; flex-grow:0.4;"><span id="pvCompanyMoo" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">ซอย</span>
+              <span class="fill-dots" style="flex-grow:1;"><span id="pvCompanySoi" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">ถนน</span>
+              <span class="fill-dots" style="flex-grow:1.8;"><span id="pvCompanyRoad" class="field-value"></span></span>
+            </div>
+
+            <!-- Row 5: ที่อยู่หน่วยงาน 2 -->
+            <div class="line-row">
+              <span class="field-label">ตำบล</span>
+              <span class="fill-dots" style="flex-grow:1.2;"><span id="pvCompanySubdistrict" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">อำเภอ</span>
+              <span class="fill-dots" style="flex-grow:1.2;"><span id="pvCompanyDistrict" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">จังหวัด</span>
+              <span class="fill-dots" style="flex-grow:1.2;"><span id="pvCompanyProvince" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">รหัสไปรษณีย์</span>
+              <span class="fill-dots" style="width:85px; flex-grow:0.6;"><span id="pvCompanyZipcode" class="field-value"></span></span>
+            </div>
+
+            <!-- Row 6: ติดต่อหน่วยงาน -->
+            <div class="line-row">
+              <span class="field-label">โทรศัพท์มือถือผู้ประสานงาน</span>
+              <span class="fill-dots" style="flex-grow:1.2;"><span id="pvCompanyPhone" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">E-mail</span>
+              <span class="fill-dots" style="flex-grow:1.4;"><span id="pvCompanyEmail" class="field-value"></span></span>
+              <span class="field-label" style="margin-left:8px;">Id Line</span>
+              <span class="fill-dots" style="flex-grow:1.2;"><span id="pvCompanyLineId" class="field-value"></span></span>
+            </div>
+
+            <!-- ลงชื่อนักศึกษา ท้ายส่วนที่ 2 -->
+            <div class="student-sign-block">
+              <div class="student-sign-content">
+                <div style="margin-bottom:4px;">
+                  ลงชื่อนักศึกษา <span class="sign-line" style="min-width:180px;"></span>
+                </div>
+                <div style="margin-bottom:4px;">
+                  <span id="pvStudentSignName">(...........................................................)</span>
+                </div>
+                <div>
+                  วันที่ <span id="pvSignDay" style="font-weight:500;">......</span>
+                  เดือน <span id="pvSignMonth" style="font-weight:500;">..................</span>
+                  ปี <span id="pvSignYear" style="font-weight:500;">..............</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div> <!-- End Page 1 -->
+
+
+        <!-- ==================== PAGE 2 (Ms-Coop 01-01 หน้าที่ 2) ==================== -->
+        <div id="printPage2" class="a4-sheet">
+
+          <!-- โลโก้หัวหน้า 2 -->
+          <div class="p2-header-logo">
+            <img src="assets/logo.png" alt="MS-TRU Logo">
+          </div>
+
+          <!-- กรอบใหญ่รอบส่วนที่ 3 -->
+          <div class="p2-outer-border">
+            <div class="p2-title">
+              ส่วนที่ 3 ผลการพิจารณา (โครงการสหกิจศึกษานำส่งให้ภาควิชา/สาขาวิชาพิจารณา)
+            </div>
+
+            <!-- ตาราง 2 คอลัมน์ (เรียนครบหลักสูตร / ติด E I W) -->
+            <div class="eval-grid">
+              
+              <!-- คอลัมน์ซ้าย: เรียนครบหลักสูตร -->
+              <div class="eval-col-left">
+                <div class="eval-row-inline">
+                  <span id="pvCourseComplete" class="p-checkbox"></span>
+                  <span class="field-label">เรียนครบหลักสูตร</span>
+                  <span class="p-checkbox" style="margin-left:14px;"></span>
+                  <span class="field-label">จำนวน</span>
+                  <span class="fill-dots" style="width:70px;"><span id="pvCreditsEarned" class="field-value"></span></span>
+                  <span class="field-label">หน่วยกิต</span>
+                </div>
+
+                <div class="eval-row-inline" style="padding-left: 26px;">
+                  <span class="field-label">คะแนนสะสม (GPA)</span>
+                  <span class="fill-dots" style="width:80px;"><span id="pvGpa" class="field-value"></span></span>
+                </div>
+
+                <div class="eval-row-inline" style="margin-top:4px;">
+                  <span id="pvCourseIncomplete" class="p-checkbox"></span>
+                  <span class="field-label">ไม่ครบ เนื่องจาก</span>
+                </div>
+                <div class="comment-textarea-simulation" style="min-height:36px; padding:0 4px;">
+                  <span id="pvIncompleteReason" class="field-value" style="color:#000080;"></span>
+                </div>
+              </div>
+
+              <!-- คอลัมน์ขวา: รายวิชาที่ติด E, I, W -->
+              <div class="eval-col-right">
+                <div class="eval-row-inline">
+                  <span id="pvHasEiw" class="p-checkbox"></span>
+                  <span class="field-label">รายวิชาที่ติด E , I , W ได้แก่</span>
+                </div>
+                <div class="eiw-item">
+                  <span>1)</span>
+                  <span class="fill-dots"><span id="pvEiw1" class="field-value"></span></span>
+                </div>
+                <div class="eiw-item">
+                  <span>2)</span>
+                  <span class="fill-dots"><span id="pvEiw2" class="field-value"></span></span>
+                </div>
+                <div class="eiw-item">
+                  <span>3)</span>
+                  <span class="fill-dots"><span id="pvEiw3" class="field-value"></span></span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- อาจารย์ที่ปรึกษา -->
+            <div class="eval-section-block">
+              <div class="eval-block-heading">อาจารย์ที่ปรึกษา</div>
+              <div class="line-row" style="align-items:flex-start;">
+                <span class="field-label">ความคิดเห็น</span>
+                <span class="fill-dots" style="flex-grow:1;"><span id="pvAdvisorComment" class="field-value"></span></span>
+              </div>
+              <div class="line-row" style="margin-top:3px;">
+                <span class="fill-dots" style="width:100%;"></span>
+              </div>
+              <div class="sign-officer-row">
+                <div class="sign-officer-box">
+                  <div style="margin-bottom:4px;"><span class="sign-line" style="min-width:190px;"></span></div>
+                  <div style="margin-bottom:2px;"><span id="pvAdvisorName">(...............................................................)</span></div>
+                  <div>อาจารย์ที่ปรึกษา</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- หัวหน้าสาขาวิชา/หัวหน้าวิชาเอก/ประธานหลักสูตร -->
+            <div class="eval-section-block" style="margin-top:10px;">
+              <div class="eval-block-heading">หัวหน้าสาขาวิชา/หัวหน้าวิชาเอก/ประธานหลักสูตร</div>
+
+              <!-- หัวหน้าสาขา -->
+              <div class="line-row">
+                <span id="pvDeptApprove" class="p-checkbox"></span> อนุมัติ
+                <span id="pvDeptReject" class="p-checkbox" style="margin-left:14px;"></span> ไม่อนุมัติ เนื่องจาก
+                <span class="fill-dots"><span id="pvDeptRejectReason" class="field-value"></span></span>
+              </div>
+              <div class="line-row" style="margin-top:2px;">
+                <span class="fill-dots" style="width:100%;"></span>
+              </div>
+              <div class="sign-officer-row">
+                <div class="sign-officer-box">
+                  <div style="margin-bottom:4px;"><span class="sign-line" style="min-width:190px;"></span></div>
+                  <div style="margin-bottom:2px;"><span id="pvDeptHeadName">(................................................................)</span></div>
+                  <div>หัวหน้าสาขาวิชา/หัวหน้าวิชาเอก</div>
+                </div>
+              </div>
+
+              <!-- ประธานหลักสูตรบริหารธุรกิจ -->
+              <div class="line-row" style="margin-top:10px;">
+                <span id="pvDeanApprove" class="p-checkbox"></span> อนุมัติ
+                <span id="pvDeanReject" class="p-checkbox" style="margin-left:14px;"></span> ไม่อนุมัติ เนื่องจาก
+                <span class="fill-dots"><span id="pvDeanRejectReason" class="field-value"></span></span>
+              </div>
+              <div class="line-row" style="margin-top:2px;">
+                <span class="fill-dots" style="width:100%;"></span>
+              </div>
+              <div class="sign-officer-row">
+                <div class="sign-officer-box">
+                  <div style="margin-bottom:4px;"><span class="sign-line" style="min-width:190px;"></span></div>
+                  <div style="margin-bottom:2px;"><span id="pvDeanName">(................................................................)</span></div>
+                  <div>ประธานหลักสูตรบริหารธุรกิจ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- แจ้งผลการพิจารณาภาควิชา -->
+            <div class="committee-final-box">
+              <div style="font-weight:700; margin-bottom:5px;">
+                ภาควิชา/สาขาวิชาพิจารณาผลเรียบร้อยแล้ว ขอแจ้งผลการพิจารณาดังต่อไปนี้
+              </div>
+              <div class="line-row">
+                <span id="pvFinalApproved" class="p-checkbox"></span> ให้ไปปฏิบัติสหกิจศึกษาได้
+              </div>
+              <div class="line-row">
+                <span id="pvFinalPending" class="p-checkbox"></span> รอพิจารณาในโอกาสต่อไปเนื่องจาก
+                <span class="fill-dots"><span id="pvFinalPendingReason" class="field-value"></span></span>
+              </div>
+
+              <!-- ลงชื่อกรรมการสหกิจศึกษา -->
+              <div class="student-sign-block" style="margin-top:12px;">
+                <div class="student-sign-content" style="width:340px;">
+                  <div style="margin-bottom:4px;">
+                    ลงชื่อกรรมการสหกิจศึกษา <span class="sign-line" style="min-width:180px;"></span>
+                  </div>
+                  <div style="margin-bottom:4px;">
+                    <span id="pvCommitteeName">(...........................................................)</span>
+                  </div>
+                  <div>
+                    วันที่ <span id="pvCommitteeSignDay" style="font-weight:500;">......</span>
+                    เดือน <span id="pvCommitteeSignMonth" style="font-weight:500;">..................</span>
+                    ปี <span id="pvCommitteeSignYear" style="font-weight:500;">..............</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div> <!-- End p2-outer-border -->
+
+        </div> <!-- End Page 2 -->
+
+      </div> <!-- End Print Sheets Container -->
+
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       MODAL DIALOGS & TOAST
+       ======================================================================== -->
+  
+  <!-- Success Modal after Saving -->
+  <div id="saveSuccessModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>🎉 บันทึกใบสมัครเข้าสู่ระบบสำเร็จ</h3>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('saveSuccessModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:12px; color:#2E7D32; font-weight:600;">
+          บันทึกข้อมูลใบสมัครเข้าสหกิจศึกษาเรียบร้อยแล้ว ข้อมูลถูกจัดเก็บอย่างปลอดภัย
+        </p>
+        <div class="info-detail-grid">
+          <div class="detail-label">ชื่อนักศึกษา:</div>
+          <div id="modalStudentName" class="detail-value"></div>
+          <div class="detail-label">รหัสประจำตัว:</div>
+          <div id="modalStudentId" class="detail-value"></div>
+          <div class="detail-label">สถานที่ฝึกงาน:</div>
+          <div id="modalCompany" class="detail-value"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('saveSuccessModal'); switchTab('tab-records');">
+          📋 ไปหน้ารายการ
+        </button>
+        <button type="button" class="btn btn-primary" onclick="closeModal('saveSuccessModal'); switchTab('tab-print');">
+          🖨️ ไปหน้าพิมพ์เอกสาร
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Delete Modal -->
+  <div id="deleteConfirmModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 style="color:#C62828;">⚠️ ยืนยันการลบข้อมูลใบสมัคร</h3>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('deleteConfirmModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>คุณต้องการลบข้อมูลใบสมัครของ <strong id="deleteConfirmName" style="color:#C62828;"></strong> ใช่หรือไม่?</p>
+        <p style="font-size:12px; color:#78909C; margin-top:6px;">การดำเนินการนี้ไม่สามารถยกเลิกได้</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('deleteConfirmModal')">ยกเลิก</button>
+        <button type="button" class="btn btn-danger" onclick="executeDeleteApp()">ยืนยันการลบ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container no-print"></div>
+
+  <!-- Scripts -->
+  <script src="js/sample-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
