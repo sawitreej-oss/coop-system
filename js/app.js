@@ -304,7 +304,7 @@ function initEventListeners() {
   }
   const importJsonInput = document.getElementById('importJsonInput');
   if (importJsonInput) {
-    importJsonInput.addEventListener('change', importFromJSON);
+  // importJsonInput.addEventListener('change', importFromJSON);
   }
 }
 
