@@ -224,7 +224,14 @@ function initEventListeners() {
   // Form Submit
   const appForm = document.getElementById('coopAppForm');
   if (appForm) {
-    appForm.addEventListener('submit', handleFormSubmit);
+   appForm.addEventListener('submit', (e) => {
+        const formData = handleFormSubmit(e);
+        if (formData) {
+            State.applications.unshift(formData);
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(State.applications));
+        if (typeof renderApplicationsTable === 'function') renderApplicationsTable();
+    });
   }
 
   // Clear Form
