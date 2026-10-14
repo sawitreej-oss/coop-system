@@ -296,11 +296,11 @@ function initEventListeners() {
   // Export / Import
   const exportCsvBtn = document.getElementById('exportCsvBtn');
   if (exportCsvBtn) {
-    exportCsvBtn.addEventListener('click', exportToCSV);
+  // exportCsvBtn.addEventListener('click', exportToCSV);
   }
   const exportJsonBtn = document.getElementById('exportJsonBtn');
   if (exportJsonBtn) {
-    exportJsonBtn.addEventListener('click', exportToJSON);
+  // exportJsonBtn.addEventListener('click', exportToJSON);
   }
   const importJsonInput = document.getElementById('importJsonInput');
   if (importJsonInput) {
